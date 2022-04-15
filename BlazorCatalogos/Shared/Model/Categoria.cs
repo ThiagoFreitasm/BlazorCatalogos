@@ -10,8 +10,10 @@ namespace BlazorCatalogos.Shared.Model
     public class Categoria
     {
         public int CategoriaId { get; set; }
+        [Required (ErrorMessage ="O nome da categoria é obrigatorio!")]
         [MaxLength (100)]
         public string Nome  { get; set; }
+        [Required(ErrorMessage = "Coloque a descrição!")]
         [MaxLength (200)]
         public string Descricao  { get; set; }
 
