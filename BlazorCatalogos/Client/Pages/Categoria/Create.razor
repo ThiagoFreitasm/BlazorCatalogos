@@ -1,0 +1,43 @@
+﻿@page "/categoria/create"
+@inject HttpClient http
+@inject NavigationManager navigation
+
+
+<h2>Nova categoria</h2>
+
+<EditForm Model="@categoria" OnValidSubmit="@CriarCategoria">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label form="name">Nome</label>
+        <div>
+            <InputText @bind-Value="@categoria.Nome" class="form-control" />
+            <ValidationMessage For="@(()=>categoria.Nome)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label form="descricao">Descrição</label>
+        <div>
+            <InputText @bind-Value="@categoria.Descricao" class="form-control" />
+            <ValidationMessage For="@(()=>categoria.Descricao)" />
+        </div>
+    </div>
+    <br />
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <button class="btn btn-danger" @onclick="@(()=>navigation.NavigateTo("categoria"))">Cancelar</button>
+</EditForm>
+
+
+@code {
+    Categoria categoria = new Categoria();
+
+    public async Task CriarCategoria()
+    {
+        await http.PostAsJsonAsync("api/categoria", categoria);
+        navigation.NavigateTo("categoria");
+    }
+
+}
+
