@@ -4,32 +4,15 @@
 
 <h2>Editar categoria</h2>
 
-<EditForm Model="@categoria" OnValidSubmit="@EditCategoria">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        <label form="nome">Nome</label>
-        <div>
-            <InputText @bind-Value="@categoria.Nome" class="form-control" />
-            <ValidationMessage For="@(()=>categoria.Nome)" />
-        </div>
-        <label form="descricao">Descrição</label>
-        <div>
-            <InputText @bind-Value="@categoria.Descricao" class="form-control" />
-            <ValidationMessage For="@(()=>categoria.Descricao)" />
-        </div>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-success">Alterar dados</button>
-    <button class="btn btn-danger" @onclick="@(()=>navigation.NavigateTo("categoria"))">Cacelar</button>
-
-</EditForm>
+<CategoriaForm Categoria="@categoria" OnValidSubmit="@EditCategoria" ButtonTextSubmit="Salvar" ButtonTextCacelar="Cancelar">
+</CategoriaForm>
 
 @code {
+
     [Parameter]
     public int categoriaid { get; set; }
 
-    Categoria categoria = new Categoria();
+    public Categoria categoria = new Categoria();
 
     protected async override Task OnParametersSetAsync()
     {
