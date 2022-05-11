@@ -1,4 +1,4 @@
-﻿using BlazorCatalogos.Client.Shared;
+﻿using Blazor_Catalogo.Shared.Recurso;
 using BlazorCatalogos.Server.Context;
 using BlazorCatalogos.Server.Utils;
 using BlazorCatalogos.Shared.Model;
@@ -36,11 +36,7 @@ namespace BlazorCatalogos.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Produto>>> Get(
-            [FromQuery]
-            Paginacao paginacao, 
-            [FromQuery]
-            string nome)
+        public async Task<ActionResult<List<Produto>>> Get([FromQuery] Paginacao paginacao, [FromQuery] string nome)
         {
             var queryable = _context.Produtos.AsQueryable();
 
@@ -49,7 +45,7 @@ namespace BlazorCatalogos.Server.Controllers
                 queryable = queryable.Where(x => x.Nome.Contains(nome));
             }
 
-            await HttpContext.InserirParametroEmPageResponse(queryable, paginacao.QuantidadeTotalPaginas);
+            await HttpContext.InserirParametroEmPageResponse(queryable, paginacao.QuantidadePorPagina);
 
             return await queryable.Paginar(paginacao).ToListAsync();
         }        

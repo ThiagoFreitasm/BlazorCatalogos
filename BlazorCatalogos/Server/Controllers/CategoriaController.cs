@@ -1,7 +1,7 @@
-﻿using BlazorCatalogos.Server.Context;
+﻿using Blazor_Catalogo.Shared.Recurso;
+using BlazorCatalogos.Server.Context;
 using BlazorCatalogos.Server.Utils;
 using BlazorCatalogos.Shared.Model;
-using BlazorCatalogos.Shared.Recurso;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,18 +30,21 @@ namespace BlazorCatalogos.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Categoria>>> Get([FromQuery] Paginacao paginacao,[FromQuery] string nome)
+        public async Task<ActionResult<List<Categoria>>> Get([FromQuery] Paginacao paginacao,
+            [FromQuery] string nome)
         {
-            var queryble = Context.Categorias.AsQueryable();
+            //O AsQueryable() CONVERTE o IEnumerable() que é uma lista de categoria para poder passar para o method de estencao. 
+            var queryable = Context.Categorias.AsQueryable();           
 
             if (!string.IsNullOrEmpty(nome))
             {
-                queryble = queryble.Where(x => x.Nome.Contains(nome));
+                queryable = queryable.Where(x => x.Nome.Contains(nome));
             }
-            await HttpContext.InserirParametroEmPageResponse(queryble, paginacao.QuantidadePorPagina);
-            return await queryble.Paginar(paginacao).ToListAsync();
-            
-            //return await Context.Categorias.AsNoTracking().ToListAsync();
+
+            await HttpContext.InserirParametroEmPageResponse(queryable, paginacao.QuantidadePorPagina);
+
+            return await queryable.Paginar(paginacao).ToListAsync();
+
         }
 
         [HttpGet("{id}", Name="GetCategoria")]

@@ -1,4 +1,4 @@
-﻿using BlazorCatalogos.Shared.Recurso;
+﻿using Blazor_Catalogo.Shared.Recurso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
