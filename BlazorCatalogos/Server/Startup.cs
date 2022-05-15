@@ -30,9 +30,6 @@ namespace BlazorCatalogos.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddAuthorizationCore();
-            //AuthStateProvider == Classe na pasta Authentication
-            services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
